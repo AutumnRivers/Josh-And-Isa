@@ -1,6 +1,6 @@
 <story>
    <author>SmartieWrites</author>
-   <build_number>238</build_number>
+   <build_number>317</build_number>
    <chapter no="1">
       <chdate>01/01/1900</chdate>
       <chdesc>Main Menu</chdesc>
@@ -9,6 +9,8 @@
             <if>TRUE</if>
             <then>VAR,auto,none</then>
             <then>VAR,debug,false</then>
+            <then>VAR,goodend,0</then>
+            <then>VAR,badend,0</then>
          </condition>
       </message>
       <message no="1.2" type="msgr">
@@ -46,11 +48,25 @@ I hope you enjoy!</content>
                <sent>1000</sent>
             </send_duration>
          </reply>
+         <reply no="3">
+            <content>Chapter Skip</content>
+            <preview>Chapter Skip</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
       </message>
       <message no="1.4" type="msgr">
          <condition>
             <if>READ,1.3,1</if>
             <then>SKIPTO_CH,2</then>
+         </condition>
+         <condition>
+            <if>READ,1.3,3</if>
+            <then>SKIPTO,14</then>
          </condition>
          <msg no="1">
             <content>~Settings~
@@ -103,14 +119,14 @@ From here, you can do stuff. And change stuff around. Interesting, huh?</content
          </condition>
          <condition>
             <if>READ,1.5,3</if>
-            <then>SKIPTO,2</then>
+            <then>SKIPTO,3</then>
          </condition>
          <msg no="1">
             <content>&lt;&gt;AutoTrack&lt;&gt;
 You&apos;re probably here to get a specific ending, right? I understand! I&apos;ll even help you! Just choose the ending you want, then let AutoTrack do the rest. It&apos;ll be like you&apos;re reading a one-track story!
 
 NOTE
-AutoTrack does not currently work with this version of Josh and Isa.</content>
+This version of AutoTrack is not final. It may change in the future.</content>
             <end_delay>0</end_delay>
             <typing>
                <show>yes</show>
@@ -209,7 +225,7 @@ AutoTrack does not currently work with this version of Josh and Isa.</content>
       <message no="1.9" type="msgr">
          <condition>
             <if>TRUE</if>
-            <then>SKIPTO,2</then>
+            <then>SKIPTO,4</then>
          </condition>
       </message>
       <message no="1.10" type="msgr">
@@ -287,7 +303,70 @@ Enabling debug will send a message at the beginning and end of each chapter with
       <message no="1.13" type="msgr">
          <condition>
             <if>TRUE</if>
-            <then>SKIPTO,2</then>
+            <then>SKIPTO,4</then>
+         </condition>
+      </message>
+      <message no="1.14" type="msgr">
+         <msg no="1">
+            <content>→Chapter Skip→
+If you&apos;re constantly updating this story, chances are you&apos;re starting over. Whether that&apos;s the case, or you just want to get straight into the action, I&apos;ve got you covered.
+
+Chapter Skip 8: Skips to chapter 8, the first choice-intense chapter
+
+Chapter Skip Ending: This is for use with AutoTrack, as it skips straight to August. It puts you right at the final chapter before what ending you get is decided.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="1.15" type="player">
+         <reply no="1">
+            <content>Chapter Skip 8</content>
+            <preview>Chapter Skip 8</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+         <reply no="2">
+            <content>Chapter Skip Ending</content>
+            <preview>Chapter Skip Ending</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+         <reply no="3">
+            <content>Back</content>
+            <preview>Back</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="1.16" type="msgr">
+         <condition>
+            <if>READ,1.15,1</if>
+            <then>SKIPTO_CH,8</then>
+         </condition>
+         <condition>
+            <if>READ,1.15,2</if>
+            <then>SKIPTO_CH,12</then>
+         </condition>
+         <condition>
+            <if>READ,1.15,3</if>
+            <then>SKIPTO,3</then>
          </condition>
       </message>
       <msgr_dp>default</msgr_dp>
@@ -305,15 +384,20 @@ Enabling debug will send a message at the beginning and end of each chapter with
       <message no="2.1" type="msgr">
          <condition>
             <if>TRUE</if>
-            <then>VAR,goodend,0</then>
-            <then>VAR,badend,0</then>
             <then>VAR,secret,0</then>
          </condition>
       </message>
       <message no="2.2" type="msgr">
          <condition>
+            <if>TRUE</if>
+            <then>PLAY_SOUND,res_pfjs561157.mp3,1,100</then>
+         </condition>
+      </message>
+      <message no="2.3" type="msgr">
+         <condition>
             <else>SHOW,1</else>
             <if>VAR_CHECK,no,debug,false</if>
+            <then>SKIPTO,4</then>
          </condition>
          <msg no="1">
             <content>•••DEBUG STATS•••
@@ -331,7 +415,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.3" type="player">
+      <message no="2.4" type="player">
          <reply no="1">
             <content>Ugh... It&apos;s so hard to see out here...</content>
             <preview>...</preview>
@@ -343,13 +427,13 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.4" type="msgr">
+      <message no="2.5" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,1000,I still remember that December...,!SpLiT!,1500,The one where I met her.</then>
          </condition>
       </message>
-      <message no="2.5" type="player">
+      <message no="2.6" type="player">
          <reply no="1">
             <content>I should&apos;ve stayed home...</content>
             <preview>...</preview>
@@ -361,7 +445,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.6" type="player">
+      <message no="2.7" type="player">
          <reply no="1">
             <content>Coming out here was a mistake...</content>
             <preview>...</preview>
@@ -373,19 +457,19 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.7" type="msgr">
+      <message no="2.8" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,3000,Sometimes I wonder what would&apos;ve changed if she never showed up at all.,!SpLiT!,2000,Would I even still be here?</then>
          </condition>
       </message>
-      <message no="2.8" type="msgr">
+      <message no="2.9" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,You bump into somebody.</then>
          </condition>
       </message>
-      <message no="2.9" type="player">
+      <message no="2.10" type="player">
          <reply no="1">
             <content>Ah, sorry! I&apos;ll help pick that up...</content>
             <preview>!</preview>
@@ -397,7 +481,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.10" type="msgr">
+      <message no="2.11" type="msgr">
          <msg no="1">
             <content>Haha, it&apos;s fine! Even I can barely see two feet in front of me in this storm.</content>
             <end_delay>1000</end_delay>
@@ -410,7 +494,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.11" type="player">
+      <message no="2.12" type="player">
          <reply no="1">
             <content>Again, sorry. I wasn&apos;t looking where I was going and-</content>
             <preview>...</preview>
@@ -422,14 +506,14 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.12" type="msgr">
+      <message no="2.13" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,The wind kicks up.</then>
             <then>FADE_ADV,0,2000,I remember when I first saw her, I was...,!SpLiT!,2000,Well, love at first sight, right?,!SpLiT!,500,Her smile...,!SpLiT!,200,...</then>
          </condition>
       </message>
-      <message no="2.13" type="msgr">
+      <message no="2.14" type="msgr">
          <msg no="1">
             <content>Like I said, it&apos;s fine!</content>
             <end_delay>2000</end_delay>
@@ -442,7 +526,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.14" type="msgr">
+      <message no="2.15" type="msgr">
          <msg no="1">
             <content>I&apos;m Isa, by the way. Isa Latem.</content>
             <end_delay>500</end_delay>
@@ -455,7 +539,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.15" type="msgr">
+      <message no="2.16" type="msgr">
          <msg no="1">
             <content>Are you lost?</content>
             <end_delay>0</end_delay>
@@ -467,7 +551,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.16" type="player">
+      <message no="2.17" type="player">
          <reply no="1">
             <content>Huh? Oh, yeah, I&apos;m a bit lost...</content>
             <preview>Yeah...</preview>
@@ -479,7 +563,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.17" type="msgr">
+      <message no="2.18" type="msgr">
          <msg no="1">
             <content>Well, if you want, you could hang out at my house until this storm calms down. It&apos;s just a couple blocks away.</content>
             <end_delay>1000</end_delay>
@@ -492,7 +576,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.18" type="player">
+      <message no="2.19" type="player">
          <reply no="1">
             <content>Yeah, that&apos;d be great, thank you!</content>
             <preview>Yes, thank you!</preview>
@@ -514,15 +598,15 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.19" type="msgr">
+      <message no="2.20" type="msgr">
          <condition>
-            <if>READ,2.18,1</if>
+            <if>READ,2.19,1</if>
             <then>VAR,visit,true</then>
          </condition>
          <condition>
-            <if>READ,2.18,2</if>
+            <if>READ,2.19,2</if>
             <then>VAR,visit,false</then>
-            <then>SKIPTO,37</then>
+            <then>SKIPTO,35</then>
          </condition>
          <msg no="1">
             <content>Alright, then, follow me!</content>
@@ -535,20 +619,20 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.20" type="msgr">
+      <message no="2.21" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,1,2000,So then, I started walking with Isa.,!SpLiT!,2000,I don&apos;t know how she knew where to go, but...,!SpLiT!,1000,We made it to her house.,!SpLiT!,2000,Eventually.</then>
          </condition>
       </message>
-      <message no="2.21" type="msgr">
+      <message no="2.22" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,You arrive at Isa&apos;s house</then>
             <then>RT_SET_BG,1000,res_3a80iy81q2.jpg</then>
          </condition>
       </message>
-      <message no="2.22" type="msgr">
+      <message no="2.23" type="msgr">
          <msg no="1">
             <content>Ah, here we are! Sorry that took so long.</content>
             <end_delay>0</end_delay>
@@ -560,7 +644,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.23" type="player">
+      <message no="2.24" type="player">
          <reply no="1">
             <content>It&apos;s fine. Really. I&apos;m surprised you even knew where to go.</content>
             <preview>...</preview>
@@ -572,7 +656,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.24" type="msgr">
+      <message no="2.25" type="msgr">
          <msg no="1">
             <content>Trust me, I know the layout of this town like the back of my hand.</content>
             <end_delay>500</end_delay>
@@ -585,7 +669,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.25" type="msgr">
+      <message no="2.26" type="msgr">
          <msg no="1">
             <content>So, hey, you know my name. Do you mind if I ask yours?</content>
             <end_delay>0</end_delay>
@@ -597,7 +681,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.26" type="player">
+      <message no="2.27" type="player">
          <reply no="1">
             <content>I&apos;m Josh, nice to meet you.</content>
             <preview>...</preview>
@@ -609,7 +693,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.27" type="msgr">
+      <message no="2.28" type="msgr">
          <msg no="1">
             <content>Why were you out in the storm?</content>
             <end_delay>0</end_delay>
@@ -621,7 +705,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.28" type="player">
+      <message no="2.29" type="player">
          <reply no="1">
             <content>Well... uh...</content>
             <preview>...</preview>
@@ -643,7 +727,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.29" type="msgr">
+      <message no="2.30" type="msgr">
          <msg no="1">
             <content>Don&apos;t wanna talk about it? That&apos;s fine!</content>
             <end_delay>2000</end_delay>
@@ -656,7 +740,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.30" type="msgr">
+      <message no="2.31" type="msgr">
          <msg no="1">
             <content>Oh, I gotta go. Be right back!</content>
             <end_delay>3000</end_delay>
@@ -669,7 +753,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.31" type="player">
+      <message no="2.32" type="player">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,Isa goes into another room</then>
@@ -685,19 +769,19 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.32" type="msgr">
+      <message no="2.33" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,2000,I didn&apos;t know what would happen next.,!SpLiT!,2000,The future always holds something new.,!SpLiT!,2000,But I did know one thing.,!SpLiT!,3500,A new story was beginning.</then>
          </condition>
       </message>
-      <message no="2.33" type="msgr">
+      <message no="2.34" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>END_CHAPTER</then>
          </condition>
       </message>
-      <message no="2.34" type="msgr">
+      <message no="2.35" type="msgr">
          <msg no="1">
             <content>Oh, that&apos;s fine! Where do you live?</content>
             <end_delay>0</end_delay>
@@ -709,7 +793,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.35" type="player">
+      <message no="2.36" type="player">
          <reply no="1">
             <content>I, uh...</content>
             <preview>...</preview>
@@ -721,7 +805,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.36" type="msgr">
+      <message no="2.37" type="msgr">
          <msg no="1">
             <content>@expr+You look around, trying to find a relative direction to your house...</content>
             <end_delay>1000</end_delay>
@@ -734,7 +818,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.37" type="msgr">
+      <message no="2.38" type="msgr">
          <msg no="1">
             <content>@expr+But to no avail.</content>
             <end_delay>0</end_delay>
@@ -746,7 +830,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.38" type="player">
+      <message no="2.39" type="player">
          <reply no="1">
             <content>I don&apos;t know...</content>
             <preview>...</preview>
@@ -758,7 +842,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.39" type="msgr">
+      <message no="2.40" type="msgr">
          <msg no="1">
             <content>Well, shouldn&apos;t be too far, right?</content>
             <end_delay>0</end_delay>
@@ -770,7 +854,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.40" type="player">
+      <message no="2.41" type="player">
          <reply no="1">
             <content>...</content>
             <preview>...</preview>
@@ -782,13 +866,13 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.41" type="msgr">
+      <message no="2.42" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,2500,I didn&apos;t know how long I was walking for.,!SpLiT!,2000,My house could be really far away.,!SpLiT!,3500,It could be all the way on the other side of the world. I don&apos;t know.,!SpLiT!,300,...</then>
          </condition>
       </message>
-      <message no="2.42" type="msgr">
+      <message no="2.43" type="msgr">
          <msg no="1">
             <content>Ah, don&apos;t worry. I&apos;m sure I can find it. You know the address, right?</content>
             <end_delay>0</end_delay>
@@ -800,7 +884,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.43" type="player">
+      <message no="2.44" type="player">
          <reply no="1">
             <content>How would you be able to find it in this storm?</content>
             <preview>...</preview>
@@ -812,7 +896,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.44" type="msgr">
+      <message no="2.45" type="msgr">
          <msg no="1">
             <content>I know this town like the back of my hand, no worries!</content>
             <end_delay>0</end_delay>
@@ -824,7 +908,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.45" type="player">
+      <message no="2.46" type="player">
          <reply no="1">
             <content>Okay...</content>
             <preview>...</preview>
@@ -836,7 +920,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.46" type="msgr">
+      <message no="2.47" type="msgr">
          <msg no="1">
             <content>@expr+You tell Isa where you live.</content>
             <end_delay>0</end_delay>
@@ -848,7 +932,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.47" type="msgr">
+      <message no="2.48" type="msgr">
          <msg no="1">
             <content>Hey, I know where that is!</content>
             <end_delay>0</end_delay>
@@ -860,13 +944,13 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.48" type="msgr">
+      <message no="2.49" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,Isa starts running.</then>
          </condition>
       </message>
-      <message no="2.49" type="player">
+      <message no="2.50" type="player">
          <reply no="1">
             <content>H-hey! Wait up!</content>
             <preview>...</preview>
@@ -878,13 +962,13 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.50" type="msgr">
+      <message no="2.51" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,2000,I don&apos;t know how, but...,!SpLiT!,2000,...she did find my house.,!SpLiT!,2000,Eventually.</then>
          </condition>
       </message>
-      <message no="2.51" type="msgr">
+      <message no="2.52" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_BG,1000,res_bu83e1d7w0.jpg</then>
@@ -900,7 +984,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.52" type="player">
+      <message no="2.53" type="player">
          <reply no="1">
             <content>Yeah, it is! Thank you!</content>
             <preview>...</preview>
@@ -912,7 +996,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.53" type="msgr">
+      <message no="2.54" type="msgr">
          <msg no="1">
             <content>No problem. Oh! Before I go...</content>
             <end_delay>1000</end_delay>
@@ -925,7 +1009,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.54" type="msgr">
+      <message no="2.55" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,Isa hands you a slip of paper</then>
@@ -941,7 +1025,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.55" type="player">
+      <message no="2.56" type="player">
          <reply no="1">
             <content>What&apos;s this?</content>
             <preview>...</preview>
@@ -953,7 +1037,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.56" type="player">
+      <message no="2.57" type="player">
          <reply no="1">
             <content>I-is this your number?</content>
             <preview>...</preview>
@@ -965,7 +1049,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.57" type="msgr">
+      <message no="2.58" type="msgr">
          <msg no="1">
             <content>Yep! Figured we&apos;d keep in touch, now that we&apos;re friends.</content>
             <end_delay>0</end_delay>
@@ -977,7 +1061,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.58" type="player">
+      <message no="2.59" type="player">
          <reply no="1">
             <content>Friends?</content>
             <preview>...</preview>
@@ -989,7 +1073,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.59" type="msgr">
+      <message no="2.60" type="msgr">
          <msg no="1">
             <content>Yeah, aren&apos;t we friends?</content>
             <end_delay>0</end_delay>
@@ -1001,7 +1085,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.60" type="player">
+      <message no="2.61" type="player">
          <reply no="1">
             <content>Oh! Um... yeah, I guess...</content>
             <preview>...</preview>
@@ -1013,7 +1097,7 @@ Secret: %secret%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="2.61" type="msgr">
+      <message no="2.62" type="msgr">
          <msg no="1">
             <content>Great! I&apos;ll see you later, then!</content>
             <end_delay>0</end_delay>
@@ -1025,7 +1109,7 @@ Secret: %secret%</content>
             </typing>
          </msg>
       </message>
-      <message no="2.62" type="player">
+      <message no="2.63" type="player">
          <reply no="1">
             <content>...see ya.</content>
             <preview>...</preview>
@@ -1056,6 +1140,7 @@ Secret: %secret%</content>
          <condition>
             <else>SHOW,1</else>
             <if>VAR_CHECK,no,debug,false</if>
+            <then>SKIPTO,3</then>
          </condition>
          <msg no="1">
             <content>°•.Debug Stats.•°
@@ -1079,7 +1164,13 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.2" type="player">
+      <message no="3.2" type="msgr">
+         <condition>
+            <if>TRUE</if>
+            <then>STOP_SOUND,res_pfjs561157.mp3</then>
+         </condition>
+      </message>
+      <message no="3.3" type="player">
          <reply no="1">
             <content>JACK</content>
             <preview>!</preview>
@@ -1091,7 +1182,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.3" type="player">
+      <message no="3.4" type="player">
          <reply no="1">
             <content>YOU&apos;LL NEVER GUESSED WHAT HAPPENED</content>
             <preview>!</preview>
@@ -1103,7 +1194,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.4" type="msgr">
+      <message no="3.5" type="msgr">
          <msg no="1">
             <content>Well, shit, you&apos;re using all caps. This must be important. I&apos;m listening! Or... reading.</content>
             <end_delay>0</end_delay>
@@ -1115,7 +1206,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.5" type="player">
+      <message no="3.6" type="player">
          <reply no="1">
             <content>I FELL IN LOVE</content>
             <preview>!</preview>
@@ -1127,7 +1218,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.6" type="player">
+      <message no="3.7" type="player">
          <reply no="1">
             <content>I THINK</content>
             <preview>!</preview>
@@ -1139,7 +1230,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.7" type="msgr">
+      <message no="3.8" type="msgr">
          <msg no="1">
             <content>You think you fell in love?</content>
             <end_delay>0</end_delay>
@@ -1151,7 +1242,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.8" type="player">
+      <message no="3.9" type="player">
          <reply no="1">
             <content>I don&apos;t know what it feels like.</content>
             <preview>!</preview>
@@ -1163,7 +1254,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.9" type="player">
+      <message no="3.10" type="player">
          <reply no="1">
             <content>I&apos;m pretty sure it&apos;s love.</content>
             <preview>!</preview>
@@ -1175,7 +1266,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.10" type="msgr">
+      <message no="3.11" type="msgr">
          <msg no="1">
             <content>Alright, alright, so who is it?</content>
             <end_delay>0</end_delay>
@@ -1187,7 +1278,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.11" type="player">
+      <message no="3.12" type="player">
          <reply no="1">
             <content>Isa Latem! At least, that&apos;s what she told me her name was...</content>
             <preview>!</preview>
@@ -1199,7 +1290,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.12" type="msgr">
+      <message no="3.13" type="msgr">
          <msg no="1">
             <content>Isa Latem, huh?</content>
             <end_delay>2500</end_delay>
@@ -1212,7 +1303,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.13" type="msgr">
+      <message no="3.14" type="msgr">
          <msg no="1">
             <content>I don&apos;t think I&apos;ve ever heard that name before. Does she go to our school?</content>
             <end_delay>0</end_delay>
@@ -1226,7 +1317,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.14" type="player">
+      <message no="3.15" type="player">
          <reply no="1">
             <content>Um, I&apos;m not sure, actually...</content>
             <preview>I don&apos;t know.</preview>
@@ -1248,15 +1339,15 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.15" type="msgr">
+      <message no="3.16" type="msgr">
          <condition>
-            <if>READ,3.14,1</if>
+            <if>READ,3.15,1</if>
             <then>NUM_OPER,0,%goodend,1,goodend</then>
          </condition>
          <condition>
-            <if>READ,3.14,2</if>
+            <if>READ,3.15,2</if>
             <then>NUM_OPER,0,%goodend,3,goodend</then>
-            <then>SKIPTO,20</then>
+            <then>SKIPTO,24</then>
          </condition>
          <msg no="1">
             <content>You&apos;re not sure?</content>
@@ -1269,7 +1360,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.16" type="player">
+      <message no="3.17" type="player">
          <reply no="1">
             <content>I never really asked her</content>
             <preview>...</preview>
@@ -1281,7 +1372,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.17" type="msgr">
+      <message no="3.18" type="msgr">
          <msg no="1">
             <content>Well, as long as she doesn&apos;t actually live in like Europe or something, that&apos;d be a hard relationship to maintain.</content>
             <end_delay>2000</end_delay>
@@ -1294,13 +1385,13 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.18" type="msgr">
+      <message no="3.19" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,1500,Jack wasn&apos;t exactly a love guru, but...,!SpLiT!,2000,He was once in a long-distance relationship.,!SpLiT!,3000,They talked over everything. Snapchat, Twitter, Facebook, you get the idea.,!SpLiT!,3500,One day, she just stopped talking to him. It didn&apos;t take him long to figure out why that was.,!SpLiT!,2500,He&apos;s held an opinion for long-distance relationships ever since.</then>
          </condition>
       </message>
-      <message no="3.19" type="player">
+      <message no="3.20" type="player">
          <reply no="1">
             <content>No kidding lol</content>
             <preview>...</preview>
@@ -1312,10 +1403,9 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.20" type="msgr">
+      <message no="3.21" type="msgr">
          <condition>
-            <if>READ,3.19,1</if>
-            <then>SKIPTO,22</then>
+            <if>READ,3.20,1</if>
          </condition>
          <msg no="1">
             <content>Neato!</content>
@@ -1328,7 +1418,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.21" type="msgr">
+      <message no="3.22" type="msgr">
          <msg no="1">
             <content>Anyways...</content>
             <end_delay>0</end_delay>
@@ -1340,7 +1430,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.22" type="msgr">
+      <message no="3.23" type="msgr">
          <msg no="1">
             <content>How&apos;d you meet her?</content>
             <end_delay>0</end_delay>
@@ -1352,7 +1442,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.23" type="player">
+      <message no="3.24" type="player">
          <reply no="1">
             <content>We met in the storm yesterday! I got a bit lost...</content>
             <preview>!</preview>
@@ -1364,7 +1454,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.24" type="msgr">
+      <message no="3.25" type="msgr">
          <msg no="1">
             <content>The storm? You were out in that? And she was, too?</content>
             <end_delay>0</end_delay>
@@ -1376,7 +1466,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.25" type="player">
+      <message no="3.26" type="player">
          <reply no="1">
             <content>Yeah, I meant to just take a walk, but I ended up losing since of where I was. As for Isa, I don&apos;t really know why she was out there...</content>
             <preview>...</preview>
@@ -1388,7 +1478,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.26" type="msgr">
+      <message no="3.27" type="msgr">
          <msg no="1">
             <content>Man, you can&apos;t help but get lost, huh?</content>
             <end_delay>0</end_delay>
@@ -1400,7 +1490,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.27" type="player">
+      <message no="3.28" type="player">
          <reply no="1">
             <content>Haha, you know me!</content>
             <preview>!</preview>
@@ -1412,7 +1502,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.28" type="msgr">
+      <message no="3.29" type="msgr">
          <msg no="1">
             <content>Remember when you got lost in that field trip years ago?</content>
             <end_delay>0</end_delay>
@@ -1424,7 +1514,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.29" type="player">
+      <message no="3.30" type="player">
          <reply no="1">
             <content>Yep, how could I forget?</content>
             <preview>!</preview>
@@ -1436,7 +1526,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.30" type="msgr">
+      <message no="3.31" type="msgr">
          <msg no="1">
             <content>Well, I&apos;m glad to hear you fell in love.</content>
             <end_delay>0</end_delay>
@@ -1448,7 +1538,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.31" type="player">
+      <message no="3.32" type="player">
          <reply no="1">
             <content>Thanks, Jack.</content>
             <preview>!</preview>
@@ -1460,7 +1550,7 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.32" type="msgr">
+      <message no="3.33" type="msgr">
          <msg no="1">
             <content>Anyways, I gotta go, but I&apos;ll see you... well, next year, huh? I can&apos;t believe it&apos;s already almost 2016...</content>
             <end_delay>0</end_delay>
@@ -1474,7 +1564,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.33" type="player">
+      <message no="3.34" type="player">
          <reply no="1">
             <content>Yeah, this year flew by pretty quickly.</content>
             <preview>This year flew by.</preview>
@@ -1496,14 +1586,14 @@ None!</content>
             </send_duration>
          </reply>
       </message>
-      <message no="3.34" type="msgr">
+      <message no="3.35" type="msgr">
          <condition>
-            <if>READ,3.33,1</if>
+            <if>READ,3.34,1</if>
             <then>NUM_OPER,0,%goodend,1,goodend</then>
-            <then>SKIPTO,37</then>
+            <then>SKIPTO,39</then>
          </condition>
          <condition>
-            <if>READ,3.33,2</if>
+            <if>READ,3.34,2</if>
             <then>NUM_OPER,0,%badend,3,badend</then>
             <then>SHOW,1</then>
          </condition>
@@ -1518,7 +1608,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.35" type="msgr">
+      <message no="3.36" type="msgr">
          <msg no="1">
             <content>See ya!</content>
             <end_delay>0</end_delay>
@@ -1530,7 +1620,7 @@ None!</content>
             </typing>
          </msg>
       </message>
-      <message no="3.36" type="player">
+      <message no="3.37" type="player">
          <reply no="1">
             <content>See ya!</content>
             <preview>!</preview>
@@ -2175,6 +2265,11 @@ None!</content>
       <chdate>01/10/2016</chdate>
       <chdesc>January</chdesc>
       <message no="5.1" type="msgr">
+         <condition>
+            <else>SKIPTO,2</else>
+            <if>VAR_CHECK,no,debug,true</if>
+            <then>SHOW,1</then>
+         </condition>
          <msg no="1">
             <content>^•√DEBUG STATS√•^
 Debug: %debug%
@@ -2367,7 +2462,7 @@ Secret: %secret%</content>
          </condition>
          <condition>
             <if>READ,5.11,3</if>
-            <then>SKIPTO,34</then>
+            <then>SKIPTO,33</then>
          </condition>
          <msg no="1">
             <content>Can&apos;t say I have many hobbies... I guess I listen to music every now and then. But that&apos;s really about it.</content>
@@ -2456,7 +2551,7 @@ Secret: %secret%</content>
       <message no="5.19" type="msgr">
          <condition>
             <if>VAR_CHECK,no,topics,done</if>
-            <then>SKIPTO,44</then>
+            <then>SKIPTO,43</then>
          </condition>
       </message>
       <message no="5.20" type="msgr">
@@ -2924,12 +3019,17 @@ Secret: %secret%</content>
       <custom_names>no</custom_names>
       <custom_dp>yes</custom_dp>
       <real_talk>false</real_talk>
-      <chtime>19:31:00</chtime>
+      <chtime>07:31:00</chtime>
    </chapter>
    <chapter no="6">
       <chdate>01/30/2016</chdate>
       <chdesc>Despite everything, I still love her.</chdesc>
       <message no="6.1" type="msgr">
+         <condition>
+            <else>SKIPTO,2</else>
+            <if>VAR_CHECK,no,debug,true</if>
+            <then>SHOW,1</then>
+         </condition>
          <msg no="1">
             <content>---DEBUG STATS---
 Debug: %debug%
@@ -3024,10 +3124,6 @@ Visit: %visit%</content>
          </msg>
       </message>
       <message no="6.8" type="player">
-         <condition>
-            <if>TRUE</if>
-            <then>END_GAME</then>
-         </condition>
          <reply no="1">
             <content>I mean, I can see her saying yes, but who knows...</content>
             <preview>She&apos;d say yes.</preview>
@@ -3447,7 +3543,7 @@ nobody can read these descriptions anyways so</chdesc>
       </message>
       <message no="7.14" type="player">
          <reply no="1">
-            <content>Whoa, didn&apos;t see that coming!</content>
+            <content>Can&apos;t say I saw that coming...</content>
             <preview>!</preview>
             <send_duration>
                <delivered>1000</delivered>
@@ -3719,15 +3815,16 @@ nobody can read these descriptions anyways so</chdesc>
       <real_talk>true</real_talk>
       <real_talk_st>fit</real_talk_st>
       <real_talk_stat>It&apos;s snowing...</real_talk_stat>
-      <chtime>05:13:00</chtime>
+      <chtime>17:13:00</chtime>
    </chapter>
    <chapter no="8">
       <chdate>03/05/2016</chdate>
       <chdesc>Its all about the keys.</chdesc>
       <message no="8.1" type="msgr">
          <condition>
+            <else>SHOW,1</else>
             <if>VAR_CHECK,no,debug,false</if>
-            <then>SKIPTO,1</then>
+            <then>SKIPTO,2</then>
          </condition>
          <msg no="1">
             <content>{✓}DEBUG STATS{✓}
@@ -4675,6 +4772,11 @@ Visit: %visit%</content>
       <chdate>04/14/2015</chdate>
       <chdesc>.</chdesc>
       <message no="9.1" type="msgr">
+         <condition>
+            <else>SKIPTO,2</else>
+            <if>VAR_CHECK,no,debug,true</if>
+            <then>SHOW,1</then>
+         </condition>
          <msg no="1">
             <content>--DEBUG STATS--
 Goodend: %goodend%
@@ -4989,7 +5091,7 @@ Visit: %visit%</content>
       </message>
       <message no="9.19" type="msgr">
          <condition>
-            <else>SKIPTO,20</else>
+            <else>SKIPTO,24</else>
             <if>READ,9.18,1</if>
             <then>NUM_OPER,0,%badend,2,badend</then>
             <then>SHOW,1</then>
@@ -5949,9 +6051,32 @@ Visit: %visit%</content>
       <chdesc>Yeah, August changed everything.</chdesc>
       <message no="12.1" type="msgr">
          <condition>
+            <else>SKIPTO,3</else>
+            <if>CH_SKIPPED,11</if>
+            <then>SHOW,1</then>
+         </condition>
+         <msg no="1">
+            <content>Chapter skip detected. Moving straight to next chapter.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="12.2" type="msgr">
+         <condition>
+            <if>CH_SKIPPED,11</if>
+            <then>SKIPTO,47</then>
+         </condition>
+      </message>
+      <message no="12.3" type="msgr">
+         <condition>
             <else>SHOW,1</else>
             <if>!VAR_CHECK,no,debug,true</if>
-            <then>SKIPTO,2</then>
+            <then>SKIPTO,4</then>
          </condition>
          <msg no="1">
             <content>фDEBUG STATSф
@@ -5972,7 +6097,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.2" type="msgr">
+      <message no="12.4" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>PLAY_SOUND,res_74200dwyyk.mp3,1,100</then>
@@ -5988,7 +6113,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.3" type="player">
+      <message no="12.5" type="player">
          <reply no="1">
             <content>Yeah, I like it.</content>
             <preview>...</preview>
@@ -6000,13 +6125,13 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.4" type="msgr">
+      <message no="12.6" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,2000,I look over at Josh, who is smiling at the stars.,!SpLiT!,2000,I&apos;m glad I met him, and that I&apos;ve helped him.,!SpLiT!,1000,I really do love him.</then>
          </condition>
       </message>
-      <message no="12.5" type="msgr">
+      <message no="12.7" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>SHOW_SNACK,1,Josh points to the sky</then>
@@ -6022,7 +6147,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.6" type="player">
+      <message no="12.8" type="player">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,You look up at the stars</then>
@@ -6038,7 +6163,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.7" type="msgr">
+      <message no="12.9" type="msgr">
          <msg no="1">
             <content>That. There. The northern star.</content>
             <end_delay>1000</end_delay>
@@ -6051,7 +6176,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.8" type="msgr">
+      <message no="12.10" type="msgr">
          <msg no="1">
             <content>Such a mystical thing, huh?</content>
             <end_delay>0</end_delay>
@@ -6063,7 +6188,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.9" type="player">
+      <message no="12.11" type="player">
          <reply no="1">
             <content>How so?</content>
             <preview>How so?</preview>
@@ -6085,10 +6210,10 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.10" type="msgr">
+      <message no="12.12" type="msgr">
          <condition>
-            <if>READ,12.9,2</if>
-            <then>SKIPTO,11</then>
+            <if>READ,12.11,2</if>
+            <then>SKIPTO,15</then>
          </condition>
          <msg no="1">
             <content>Think about it. It helps light the night sky. It directs sailors, and always leads you north. Even some people believe it&apos;s connected to Santa Claus. It&apos;s just so... unique.</content>
@@ -6102,7 +6227,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.11" type="msgr">
+      <message no="12.13" type="msgr">
          <msg no="1">
             <content>Always leads north. Isn&apos;t that crazy?</content>
             <end_delay>0</end_delay>
@@ -6114,7 +6239,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.12" type="player">
+      <message no="12.14" type="player">
          <reply no="1">
             <content>Sure sounds like it.</content>
             <preview>Sure sounds crazy.</preview>
@@ -6136,10 +6261,10 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.13" type="msgr">
+      <message no="12.15" type="msgr">
          <condition>
             <else>NUM_OPER,1,%badend,1,badend</else>
-            <if>READ,12.9,1</if>
+            <if>READ,12.11,1</if>
             <then>NUM_OPER,0,%goodend,1,goodend</then>
          </condition>
          <msg no="1">
@@ -6153,7 +6278,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.14" type="player">
+      <message no="12.16" type="player">
          <reply no="1">
             <content>Yeah, Josh?</content>
             <preview>?</preview>
@@ -6165,7 +6290,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.15" type="msgr">
+      <message no="12.17" type="msgr">
          <msg no="1">
             <content>Have you ever danced with someone under the stars?</content>
             <end_delay>0</end_delay>
@@ -6177,7 +6302,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.16" type="player">
+      <message no="12.18" type="player">
          <reply no="1">
             <content>Can&apos;t say I have. What about you?</content>
             <preview>?</preview>
@@ -6189,7 +6314,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.17" type="msgr">
+      <message no="12.19" type="msgr">
          <msg no="1">
             <content>Never even danced with someone before...</content>
             <end_delay>0</end_delay>
@@ -6201,7 +6326,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.18" type="player">
+      <message no="12.20" type="player">
          <reply no="1">
             <content>Then why bring up the question?</content>
             <preview>?</preview>
@@ -6213,7 +6338,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.19" type="msgr">
+      <message no="12.21" type="msgr">
          <msg no="1">
             <content>Cause I wanna dance under the stars with you.</content>
             <end_delay>0</end_delay>
@@ -6225,7 +6350,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.20" type="player">
+      <message no="12.22" type="player">
          <reply no="1">
             <content>Right now?!? B-but...</content>
             <preview>!?</preview>
@@ -6237,13 +6362,13 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.21" type="msgr">
+      <message no="12.23" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,3000,I tried to look for an excuse that would hide the fact I&apos;m a terrible dancer.</then>
          </condition>
       </message>
-      <message no="12.22" type="player">
+      <message no="12.24" type="player">
          <reply no="1">
             <content>W-we don&apos;t even have music!</content>
             <preview>...</preview>
@@ -6255,7 +6380,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.23" type="msgr">
+      <message no="12.25" type="msgr">
          <msg no="1">
             <content>Who says you need music?</content>
             <end_delay>0</end_delay>
@@ -6267,7 +6392,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.24" type="player">
+      <message no="12.26" type="player">
          <reply no="1">
             <content>I mean, don&apos;t you need music to dance?</content>
             <preview>?</preview>
@@ -6279,7 +6404,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.25" type="msgr">
+      <message no="12.27" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,You and Josh start dancing</then>
@@ -6296,7 +6421,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.26" type="msgr">
+      <message no="12.28" type="msgr">
          <msg no="1">
             <content>See? Just move to the sounds of nature.</content>
             <end_delay>0</end_delay>
@@ -6308,7 +6433,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.27" type="player">
+      <message no="12.29" type="player">
          <reply no="1">
             <content>Wow...</content>
             <preview>...</preview>
@@ -6320,7 +6445,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.28" type="player">
+      <message no="12.30" type="player">
          <reply no="1">
             <content>This is nice...</content>
             <preview>...</preview>
@@ -6332,7 +6457,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.29" type="msgr">
+      <message no="12.31" type="msgr">
          <msg no="1">
             <content>Isn&apos;t it?</content>
             <end_delay>0</end_delay>
@@ -6344,19 +6469,20 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.30" type="msgr">
+      <message no="12.32" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,1,2000,We kept dancing. For maybe an hour or two.,!SpLiT!,2000,Then Josh tripped and fell down a small cliff.,!SpLiT!,2000,He took me with him. But I&apos;m not complaining.,!SpLiT!,2000,I landed right on top of him.</then>
          </condition>
       </message>
-      <message no="12.31" type="msgr">
+      <message no="12.33" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>STOP_SOUND,res_74200dwyyk.mp3</then>
+            <then>RT_SET_STAT, </then>
          </condition>
       </message>
-      <message no="12.32" type="msgr">
+      <message no="12.34" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_BG,400,res_034y791wd9.jpg</then>
@@ -6372,7 +6498,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.33" type="player">
+      <message no="12.35" type="player">
          <reply no="1">
             <content>Are you okay?</content>
             <preview>Are you okay?</preview>
@@ -6394,11 +6520,11 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.34" type="msgr">
+      <message no="12.36" type="msgr">
          <condition>
             <else>NUM_OPER,1,%goodend,2,goodend</else>
             <else>SHOW,2</else>
-            <if>READ,12.33,1</if>
+            <if>READ,12.35,1</if>
             <then>NUM_OPER,1,%badend,2,badend</then>
             <then>SHOW,1</then>
          </condition>
@@ -6423,13 +6549,13 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.35" type="msgr">
+      <message no="12.37" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,2000,It was then that I realized...</then>
          </condition>
       </message>
-      <message no="12.36" type="msgr">
+      <message no="12.38" type="msgr">
          <msg no="1">
             <content>Hey, why are you blushing?</content>
             <end_delay>0</end_delay>
@@ -6441,7 +6567,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.37" type="player">
+      <message no="12.39" type="player">
          <reply no="1">
             <content>It&apos;s just... the way we&apos;re positioned.</content>
             <preview>...</preview>
@@ -6453,7 +6579,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.38" type="msgr">
+      <message no="12.40" type="msgr">
          <msg no="1">
             <content>Huh? Oh...</content>
             <end_delay>1000</end_delay>
@@ -6466,7 +6592,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.39" type="msgr">
+      <message no="12.41" type="msgr">
          <msg no="1">
             <content>Yeah...</content>
             <end_delay>0</end_delay>
@@ -6478,7 +6604,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.40" type="player">
+      <message no="12.42" type="player">
          <reply no="1">
             <content>Well, do you want to?</content>
             <preview>?</preview>
@@ -6490,7 +6616,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.41" type="msgr">
+      <message no="12.43" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,Josh starts blushing.</then>
@@ -6506,7 +6632,7 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.42" type="player">
+      <message no="12.44" type="player">
          <reply no="1">
             <content>Neither have I.</content>
             <preview>.</preview>
@@ -6518,7 +6644,7 @@ Visit: %visit%</content>
             </send_duration>
          </reply>
       </message>
-      <message no="12.43" type="msgr">
+      <message no="12.45" type="msgr">
          <msg no="1">
             <content>W-well, if you want to...</content>
             <end_delay>0</end_delay>
@@ -6530,13 +6656,13 @@ Visit: %visit%</content>
             </typing>
          </msg>
       </message>
-      <message no="12.44" type="msgr">
+      <message no="12.46" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,1,2000,August definitely changed everything.</then>
          </condition>
       </message>
-      <message no="12.45" type="msgr">
+      <message no="12.47" type="msgr">
          <condition>
             <else>END_CHAPTER</else>
             <if>VAR_CHECK,no,debug,true</if>
@@ -6564,7 +6690,7 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
             </typing>
          </msg>
       </message>
-      <message no="12.46" type="msgr">
+      <message no="12.48" type="msgr">
          <condition>
             <if>VAR_CHECK,no,auto,true</if>
             <then>SKIPTO_CH,13</then>
@@ -6613,12 +6739,18 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
       <message no="13.1" type="msgr">
          <condition>
             <if>TRUE</if>
+            <then>STOP_SOUND,res_74200dwyyk.mp3</then>
+         </condition>
+      </message>
+      <message no="13.2" type="msgr">
+         <condition>
+            <if>TRUE</if>
             <then>RT_SET_STAT, </then>
             <then>RT_SET_BG,500,res_o2098q0ueh.jpg</then>
             <then>FADE_ADV,0,2000,We had set up a meeting, or date, whatever you wanna call it.,!SpLiT!,2000,It was supposed to be at 4:00.,!SpLiT!,2000,However, I got there early.,!SpLiT!,2000,...and I wish I hadn&apos;t.</then>
          </condition>
       </message>
-      <message no="13.2" type="player">
+      <message no="13.3" type="player">
          <reply no="1">
             <content>Alright, all that&apos;s left is to wait for Isa...</content>
             <preview>...</preview>
@@ -6630,7 +6762,7 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
             </send_duration>
          </reply>
       </message>
-      <message no="13.3" type="player">
+      <message no="13.4" type="player">
          <reply no="1">
             <content>Hm? Isa?</content>
             <preview>?</preview>
@@ -6642,13 +6774,13 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
             </send_duration>
          </reply>
       </message>
-      <message no="13.4" type="msgr">
+      <message no="13.5" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,0,2000,I heard some noises near me.,!SpLiT!,3000,I quickly hid in a bush, in case it wasn&apos;t Isa and was actually some criminal.,!SpLiT!,2000,You can never be too safe.,!SpLiT!,1500,...but, sure enough, it WAS Isa.,!SpLiT!,2000,And... she was with another guy.</then>
          </condition>
       </message>
-      <message no="13.5" type="msgr">
+      <message no="13.6" type="msgr">
          <msg no="1">
             <content>I love you, too, Jake.</content>
             <end_delay>1000</end_delay>
@@ -6661,7 +6793,7 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
             </typing>
          </msg>
       </message>
-      <message no="13.6" type="msgr">
+      <message no="13.7" type="msgr">
          <msg no="1">
             <content>Oh, you mean Josh? I wouldn&apos;t worry about him.</content>
             <end_delay>500</end_delay>
@@ -6674,7 +6806,7 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
             </typing>
          </msg>
       </message>
-      <message no="13.7" type="msgr">
+      <message no="13.8" type="msgr">
          <msg no="1">
             <content>He&apos;s way too much of a softie. I don&apos;t think he&apos;ll ever get in an actual relationship.</content>
             <end_delay>2000</end_delay>
@@ -6687,7 +6819,7 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
             </typing>
          </msg>
       </message>
-      <message no="13.8" type="msgr">
+      <message no="13.9" type="msgr">
          <msg no="1">
             <content>Yeah, even his friends believe me.</content>
             <end_delay>0</end_delay>
@@ -6699,7 +6831,7 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
             </typing>
          </msg>
       </message>
-      <message no="13.9" type="msgr">
+      <message no="13.10" type="msgr">
          <condition>
             <if>TRUE</if>
             <then>FADE_ADV,1,2000,At that point, I ran home, leaving a trail of tears behind me.,!SpLiT!,2000,I couldn&apos;t believe what I just saw.,!SpLiT!,2000,Isa was...,!SpLiT!,2000,...cheating on me...,!SpLiT!,3000,...and apparently, we weren&apos;t even in an active relationship.</then>
@@ -7029,7 +7161,7 @@ Thanks for playing Josh and Isa! All that&apos;s left is to see what ending you 
          <condition>
             <else>SHOW,1</else>
             <if>READ,15.7,2</if>
-            <then>SKIPTO,21</then>
+            <then>SKIPTO,25</then>
          </condition>
          <msg no="1">
             <content>You didn&apos;t mean that.</content>
@@ -7251,8 +7383,34 @@ You got the true ending.</then>
       </message>
       <message no="15.26" type="msgr">
          <condition>
+            <else>END_GAME</else>
+            <if>!VAR_CHECK,no,auto,true</if>
+            <then>FADE_CMPLX,1,2000,15.26.2.T,2000, </then>
+         </condition>
+         <condition>
             <if>TRUE</if>
-            <then>END_GAME</then>
+            <then>SET_CHAT_BUDDY,*System,*System</then>
+            <then>SET_REAL_TALK,0,null,stretch</then>
+            <then>CLEAR_CHAT</then>
+         </condition>
+      </message>
+      <message no="15.27" type="msgr">
+         <msg no="1">
+            <content>Hello there! You&apos;ve seen me in the main menu. I want to once again thank you for playing Josh And Isa. For getting the true ending, you&apos;ve unlocked bonus chapters! The story will now continue into these chapters. If you do not wish to see them, simply exit the game and delete your save.</content>
+            <end_delay>10000</end_delay>
+            <end>delay</end>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="15.28" type="msgr">
+         <condition>
+            <if>TRUE</if>
+            <then>SKIPTO_CH,18</then>
          </condition>
       </message>
       <msgr_dp>res_03rc91k1oj.png</msgr_dp>
@@ -7279,6 +7437,10 @@ You got the true ending.</then>
             <if>TRUE</if>
             <then>RT_SET_STAT, </then>
             <then>RT_SET_BG,500,res_o2098q0ueh.jpg</then>
+         </condition>
+         <condition>
+            <if>TRUE</if>
+            <then>PLAY_SOUND,res_pfjs561157.mp3,1,100</then>
          </condition>
       </message>
       <message no="16.2" type="player">
@@ -7430,7 +7592,6 @@ You got the true ending.</then>
          <condition>
             <if>TRUE</if>
             <then>RT_SET_STAT,You hold out a box to Isa.</then>
-            <then>PLAY_SOUND,res_595qb55u36.mp3,0,100</then>
          </condition>
          <reply no="1">
             <content>...marry me?</content>
@@ -7539,6 +7700,10 @@ by SmartieWrites,!SpLiT!,2000,You got the good ending.</then>
       <chdesc>I&apos;m not okay.
 Bad ending.</chdesc>
       <message no="17.1" type="msgr">
+         <condition>
+            <if>TRUE</if>
+            <then>STOP_SOUND,res_74200dwyyk.mp3</then>
+         </condition>
          <msg no="1">
             <content>Josh? Are you okay? You haven&apos;t been coming to school recently.</content>
             <end_delay>0</end_delay>
@@ -7850,6 +8015,12 @@ Bad ending.</chdesc>
 by SmartieWrites,!SpLiT!,2000,You got the bad ending.</then>
          </condition>
       </message>
+      <message no="17.27" type="msgr">
+         <condition>
+            <if>TRUE</if>
+            <then>END_GAME</then>
+         </condition>
+      </message>
       <msgr_dp>9310239501.png</msgr_dp>
       <msgr_name>Jack Korus</msgr_name>
       <msgr_nickname>Jack</msgr_nickname>
@@ -7859,18 +8030,792 @@ by SmartieWrites,!SpLiT!,2000,You got the bad ending.</then>
       <real_talk>false</real_talk>
       <chtime>20:05:00</chtime>
    </chapter>
-   <date_created>1487954178108</date_created>
-   <date_modified>1517079718595</date_modified>
-   <desc>NOTE
-THIS UPDATE IS IN BETA!
-PLEASE REPORT ANY BUGS OR SUGGESTIONS TO ME IN THE COMMENTS
+   <chapter no="18">
+      <chdate>03/02/2017</chdate>
+      <chdesc>.</chdesc>
+      <message no="18.1" type="player">
+         <reply no="1">
+            <content>Hey, Jack.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.2" type="player">
+         <reply no="1">
+            <content>Ya got a minute?</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.3" type="msgr">
+         <msg no="1">
+            <content>Got a new phone, so my contacts are reset. Who is this?</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.4" type="player">
+         <reply no="1">
+            <content>It&apos;s um... Isa. Isa Latem.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.5" type="msgr">
+         <msg no="1">
+            <content>Alright I&apos;ll be sure to block you</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.6" type="player">
+         <reply no="1">
+            <content>Please wait.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.7" type="player">
+         <reply no="1">
+            <content>I actually want to talk with somebody about this.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.8" type="msgr">
+         <msg no="1">
+            <content>Okay fine, I don&apos;t have anything better to do. What is it?</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.9" type="player">
+         <reply no="1">
+            <content>I think I&apos;ve made a mistake.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.10" type="player">
+         <reply no="1">
+            <content>I shouldn&apos;t have left Josh.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.11" type="msgr">
+         <msg no="1">
+            <content>Haha yeah no shit</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.12" type="msgr">
+         <msg no="1">
+            <content>As soon as you broke up with him, he was back to his old self. If not worse. He would never talk to anybody. He&apos;d always be &quot;too busy&quot; for things. He was never outgoing anymore.</content>
+            <end_delay>3000</end_delay>
+            <end>delay</end>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.13" type="msgr">
+         <msg no="1">
+            <content>Thankfully, I think he&apos;s healed from that now.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.14" type="player">
+         <reply no="1">
+            <content>What makes you say that?</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.15" type="msgr">
+         <msg no="1">
+            <content>Well I mean he&apos;s got a new special other</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.16" type="player">
+         <reply no="1">
+            <content>Wait... seriously?</content>
+            <preview>?</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.17" type="msgr">
+         <msg no="1">
+            <content>Yeah, seems all he needed after all was a break</content>
+            <end_delay>5000</end_delay>
+            <end>delay</end>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.18" type="player">
+         <reply no="1">
+            <content>Do you know where Josh is?</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.19" type="msgr">
+         <msg no="1">
+            <content>Riiiiiiight, like I would tell you.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.20" type="player">
+         <reply no="1">
+            <content>Jack please, I just want to aplogize to him</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.21" type="msgr">
+         <msg no="1">
+            <content>Not happening, Isa</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.22" type="msgr">
+         <msg no="1">
+            <content>Figure it out yourself</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.23" type="msgr">
+         <msg no="1">
+            <content>Or don&apos;t, and just leave Josh alone.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.24" type="msgr">
+         <msg no="1">
+            <content>I think all of us would prefer you do the latter.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.25" type="player">
+         <condition>
+            <if>TRUE</if>
+            <then>PUSH_LIMIT,5000,0,18.26.1.E</then>
+         </condition>
+         <reply no="1">
+            <content>Jack, no.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.26" type="msgr">
+         <condition>
+            <else>SHOW,2</else>
+            <if>READ,18.25,1</if>
+            <then>SHOW,1</then>
+         </condition>
+         <msg no="1">
+            <content>I&apos;m not listening to this any further.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+         <msg no="2">
+            <content>@expr+You may no longer send messages to this user.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.27" type="msgr">
+         <condition>
+            <if>READ,18.26,2</if>
+            <then>END_CHAPTER</then>
+         </condition>
+         <msg no="1">
+            <content>Just stop talking to me.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.28" type="player">
+         <reply no="1">
+            <content>But I really want to know.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>3000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.29" type="player">
+         <reply no="1">
+            <content>Please...</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>5000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.30" type="msgr">
+         <msg no="1">
+            <content>You aren&apos;t going to give up, are you?</content>
+            <end_delay>1000</end_delay>
+            <end>delay</end>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.31" type="msgr">
+         <msg no="1">
+            <content>Fine. He&apos;s in Japan.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.32" type="player">
+         <reply no="1">
+            <content>Where in Japan?</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.33" type="msgr">
+         <msg no="1">
+            <content>I... honestly don&apos;t know. He said he was going to Tokyo, but I doubt he stayed there.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.34" type="player">
+         <reply no="1">
+            <content>Thanks, Jack</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="18.35" type="msgr">
+         <msg no="1">
+            <content>Yeah, yeah. Whatever.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="18.36" type="msgr">
+         <msg no="1">
+            <content>Bye.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <msgr_dp>9310239501.png</msgr_dp>
+      <msgr_name>Jack Korus</msgr_name>
+      <msgr_nickname>Jack</msgr_nickname>
+      <chname>Extra Chapter 1: Isa&apos;s Lament</chname>
+      <custom_names>no</custom_names>
+      <custom_dp>yes</custom_dp>
+      <real_talk>false</real_talk>
+      <chtime>15:38:00</chtime>
+   </chapter>
+   <chapter no="19">
+      <chdate>07/25/2016</chdate>
+      <chdesc>&lt;3</chdesc>
+      <message no="19.1" type="msgr">
+         <msg no="1">
+            <content>=Backstory=
+This was originally going to exist as a foreshadowing to the good ending for those who were on the track to the good ending.
 
-Meet Josh, a lonely 18-year old who has lost control of his own life. After getting lost in a winter storm, he meets Isa Latem.
+I scrapped the idea because I figured it would be too much work, and this would have a lot of choices that were meant to either keep the player on the good ending track, or push them off to the true ending track.
+
+This is the version WITHOUT the choices, and without a real talk background. Hope you enjoy!
+
+- SmartieWrites</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.2" type="player">
+         <reply no="1">
+            <content>Today was fun!</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.3" type="msgr">
+         <msg no="1">
+            <content>Yeah, it was! I&apos;m glad you agreed to come with me.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.4" type="player">
+         <reply no="1">
+            <content>Well, why wouldn&apos;t I?</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.5" type="msgr">
+         <msg no="1">
+            <content>Haha, got a point there.</content>
+            <end_delay>3000</end_delay>
+            <end>delay</end>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.6" type="msgr">
+         <msg no="1">
+            <content>@expr+You suddenly hear a group of people behind you clapping</content>
+            <end_delay>2000</end_delay>
+            <end>delay</end>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.7" type="player">
+         <reply no="1">
+            <content>Hm? What are they all so excited about?</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>3000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.8" type="msgr">
+         <msg no="1">
+            <content>Aww, it looks like somebody just proposed!</content>
+            <end_delay>1000</end_delay>
+            <end>delay</end>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.9" type="player">
+         <reply no="1">
+            <content>At a carnival?</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.10" type="msgr">
+         <msg no="1">
+            <content>Why not?</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.11" type="player">
+         <reply no="1">
+            <content>Nothing, just seems like an odd place to propose.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.12" type="msgr">
+         <msg no="1">
+            <content>Proposals are for everywhere. If you can somehow make it romantic, it&apos;ll do.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.13" type="player">
+         <reply no="1">
+            <content>I like your thinking, Isa.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.14" type="player">
+         <reply no="1">
+            <content>Just make do with what you have.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>4000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.15" type="msgr">
+         <msg no="1">
+            <content>Hey, Josh?</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.16" type="player">
+         <reply no="1">
+            <content>Yeah, Isa?</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.17" type="msgr">
+         <msg no="1">
+            <content>Remember that storm we met in? Why were you out in that?</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.18" type="player">
+         <reply no="1">
+            <content>I&apos;ll... tell you about it some other day.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.19" type="msgr">
+         <msg no="1">
+            <content>Better stay true to that promise, cause I&apos;m curious.</content>
+            <end_delay>0</end_delay>
+            <typing>
+               <show>yes</show>
+               <toggles length="1">
+                  <toggle>1000</toggle>
+               </toggles>
+            </typing>
+         </msg>
+      </message>
+      <message no="19.20" type="player">
+         <reply no="1">
+            <content>One day, Isa.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <message no="19.21" type="player">
+         <reply no="1">
+            <content>One day.</content>
+            <preview>.</preview>
+            <send_duration>
+               <delivered>1000</delivered>
+               <reply>1000</reply>
+               <seen>1000</seen>
+               <sent>1000</sent>
+            </send_duration>
+         </reply>
+      </message>
+      <msgr_dp>res_03rc91k1oj.png</msgr_dp>
+      <msgr_name>Isabelle Latem</msgr_name>
+      <msgr_nickname>Isa</msgr_nickname>
+      <chname>Scrapped Chapter: Carnival</chname>
+      <custom_names>no</custom_names>
+      <custom_dp>yes</custom_dp>
+      <real_talk>true</real_talk>
+      <real_talk_st>fit</real_talk_st>
+      <real_talk_stat>The carnival is in town</real_talk_stat>
+      <chtime>20:25:00</chtime>
+   </chapter>
+   <date_created>1487954178108</date_created>
+   <date_modified>1519246476181</date_modified>
+   <desc>HOLY FUCK THANK YOU ALL FOR 100 DOWNLOADS
+
+Josh is your typical High School senior... in a way. He&apos;s the shyest person you&apos;ll ever meet, and only has a few friends.
+
+After losing track of his life, he gets lost in a winter storm. There, he meets Isa Latem. And immediately, Josh is lovestruck.
 
 Will she be the one? Or will she break away?
 
+Oh, and don&apos;t think for a second this is your typical romance story. Just wait until you get the true ending...
+
 -=Update Log=-
-###v2.1(SW Current) - Bad version of AutoTrack implemented, but it works. Also, changed value of certain choices.
+###v3.4 - Bug fixes. Woohoo.
+
+v3.3 - Bonus chapters for those who get the true ending. 👍 Please note that these bonus chapters will not trigger if you have AutoTrack enabled.
+
+v3 - 100 DOWNLOADS 🎉
+
+Updated description
+
+Added milestones
+
+v2.8 - Chapter skip added, certain dialogue changed
+
+v2.6 - Debug fixes; fixed debug showing up even when disabled, fixed bug where having debug disabled would skip certain parts of certain chapters
+
+Also fixed yet ANOTHER skipto bug in January
+
+Fixed game ending early in chapter 6
+
+v2.5 - Fixed neverending loop in January (month of bugs, eh?)
+
+v2.45 - Nothing changed, just released this in case v2.4 got corrupted whilst being uploaded
+
+v2.4 - I did not, but I did now. Fixed January&apos;s SKIPTO bugs.
+
+v2.3 - (Hopefully) fixed all SKIPTO bugs, added new song.
+
+v2.1 - Bad version of AutoTrack implemented, but it works. Also, changed value of certain choices.
 
 v2 - Choices! Choices! Choices! Life is full of choices, and now this story is, too!
 
@@ -7883,6 +8828,48 @@ Discord - SmartiePlays#5434
 Twitter - SmartiePlaysYT
 Wattpad - SmartieWrites
 Reddit - SmartieYT###
+
+-=Really Cool Stories You Should Try=-
+###Seeing Through by Shikhar Trivedi
+
+100 Voicemails by sleepysin
+
+Wrong Number, Right Person by Lucky Loo
+
+Parallel by Jake1702###
+
+-=Milestones=-
+Story Related
+###100 Downloads ✔️
+200 Downloads
+300 Downloads
+500 Downloads
+1k Downloads
+5k Downloads
+10k Downloads
+
+20 Likes
+50 Likes
+100 Likes
+500 Likes
+1k Likes
+
+Featured###
+Discord Related
+( p.s. Join the awesome Seen Discord server https://discord.gg/3zYfbJ3 )
+###50 Members ✔️
+100 Members
+200 Members
+500 Members
+1k Members
+2k Members
+
+1 Partnered Server ✔️
+2 Partnered Servers
+5 Partnered Servers
+10 Partnered Servers
+20 Partnered Servers###
+
 
 Official prequel to the Welcoming January series. http://my.w.tt/UiNb/1xeVVeld2A</desc>
    <name>Josh And Isa</name>
